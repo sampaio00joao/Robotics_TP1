@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-im = imread('sinalCedencia.png');  % carregar imagem
+im = imread('sinalLomba.png');  % carregar imagem
 n = 0; % inicia com o valor 0
 maskRed = 0;
 maskYellow = 0;
@@ -92,6 +92,10 @@ for k=1:length(TriangleMetric),
     text( Centroid(k,1)-20, Centroid(k,2)+20, whichShape{k});
 end
 
+% Multiplicar imagens
+test = uint8(BW2);
+submask = im.*test;
+
 if isRectangle == 1
     if numObj > 1
         disp("Semaforo")
@@ -121,14 +125,10 @@ elseif isSquare == 1
      disp("Semaforo")
 elseif isPentagono == 1
      disp("Semaforo")
-elseif isTriangle == 1   
-    %ERRADO
-    % Apply black mask
-    %figure, imshow(im)
-    %maskBlack = createMaskBlackHSV(im);
-    %figure, imshow(maskBlack)
-    %cc = bwconncomp(maskBlack);
-    %numObj = cc.NumObjects; % get the number os objects
+elseif isTriangle == 1 
+    figure, imshow(submask)
+    cc = bwconncomp(submask);
+    numObj = cc.NumObjects; % get the number os objects
     if numObj == 1
         disp("Lomba");
     elseif numObj > 2
