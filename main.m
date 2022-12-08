@@ -2,7 +2,7 @@ clear all; close all; clc
 
 %% Captura da Imagem
 
-    NumberFrameDisplayPerSecond = 60;% Define o Frame Rate
+    NumberFrameDisplayPerSecond = 30;% Define o Frame Rate
     % Liberta a Camara ao Correr o Codigo
     objects = imaqfind; % Encontra Entrada de Video na Memoria
     delete(objects)
@@ -37,7 +37,7 @@ clear all; close all; clc
     delete(TimerData);
     stop(vid);
     delete(vid);
-    Apaga as Variaveis do Tipo Persistent
+    % Apaga as Variaveis do Tipo Persistent
     clear functions;
     imaqreset;
     
@@ -49,14 +49,12 @@ persistent im;
 trigger(vidd);% Da um Trigger
 im = getdata(vidd,1,'uint8');%l? os dados da imagem
 
-n = 0; % Inicia com o Valor 0
+% Declaração de variáveis
+n = 0; 
 maskRed = 0;
 maskYellow = 0;
 maskBlue = 0;
 im = flip(im ,2); % Espelhar a Imagem, pois a Camara Espelha a Real
-%subplot(4,4,1)
-%imshow(im)
-%title('Imagem Capturada')
 
 %% Aplicação das máscaras
 while n < 5
@@ -133,8 +131,8 @@ while n < 5
             n = 5; % reset
         case 4
             %% Forma do Objeto Principal
-            hFigure = figure(1);% Abre uma figura
-            imshow(im);
+            hFigure = figure(1);% Abre uma figura em tempo real
+            imshow(im); % apresenta a imagem inicial
             stats =  regionprops(BW2,'PixelIdxList','Area','Centroid','MajorAxisLength','Circularity','MinorAxisLength'); %Retirar todas as Informcoes do Sinal
             Area = cat(1,stats.Area); % Area do Sinal
             Centroid = cat(1, stats.Centroid); % Centro do Sinal
